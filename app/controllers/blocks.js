@@ -57,9 +57,11 @@ var getBlock = function(blockhash, cb) {
     }
 
     // TODO
-    if (!block.info) {
+    if (!block || !block.info) {
       console.log('Could not get %s from RPC. Orphan? Error?', blockhash); //TODO
       // Probably orphan
+	  if(!block)
+       return null;
       block.info = {
         hash: blockhash,
         isOrphan: 1,

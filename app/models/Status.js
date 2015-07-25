@@ -33,7 +33,7 @@ Status.prototype.getDifficulty = function(next) {
       rpc.getDifficulty(function(err, df){
         if (err) return cb(err);
 
-        that.difficulty = df.result;
+        that.difficulty = info.result;
         return cb();
       });
     }
@@ -99,6 +99,21 @@ Status.prototype.getLastBlockHash = function(next) {
           return next();
         }
     );
+  });
+};
+
+Status.prototype.getMiningInfo = function(next) {
+  var that = this;
+  async.series([
+    function (cb) {
+      rpc.getMiningInfo(function(err, info){
+        if (err) return cb(err);
+        that.info = info.result;
+        return cb();
+      });
+    },
+  ], function (err) {
+    return next(err);
   });
 };
 
