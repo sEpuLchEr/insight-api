@@ -186,7 +186,7 @@ Address.prototype.update = function(next, opts) {
           tDb.fillScriptPubKey(txOut, function() {
             //_.filter will filterout unspend without scriptPubkey
             //(probably from double spends)
-            self.unspent = _.filter(txOut.map(function(x) {
+            self.unspent = txOut.map(function(x) {
               return {
                 address: self.addrStr,
                 txid: x.txid,
@@ -197,7 +197,7 @@ Address.prototype.update = function(next, opts) {
                 confirmations: x.isConfirmedCached ? (config.safeConfirmations) : x.confirmations,
                 confirmationsFromCache: !!x.isConfirmedCached,
               };
-            }), 'scriptPubKey');;
+            });
             return next();
           });
         } else {
